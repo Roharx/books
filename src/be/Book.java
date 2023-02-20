@@ -9,7 +9,16 @@ public class Book {
     private boolean rented;
     private boolean ebook;
     private int rating;
-    private Date releaseDate;
+    private String releaseDate;
+
+    public Book(int isbn, String title, boolean rented, boolean ebook, int rating, String releaseDate){
+        this.isbn = isbn;
+        this.title = title;
+        this.rented = rented;
+        this.ebook = ebook;
+        this.rating = rating;
+        this.releaseDate = releaseDate;
+    }
 
     public int getIsbn() {
         return isbn;
@@ -51,24 +60,23 @@ public class Book {
         this.rating = rating;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
 
     @Override
     public String toString() {
-        return "Book{" +
-                "isbn=" + isbn +
-                ", title='" + title + '\'' +
-                ", rented=" + rented +
-                ", ebook=" + ebook +
-                ", rating=" + rating +
-                ", releaseDate=" + releaseDate +
-                '}';
+        return
+                isbn +
+                "," + title +
+                "," + rented +
+                "," + ebook +
+                "," + rating +
+                "," + releaseDate;
     }
 }

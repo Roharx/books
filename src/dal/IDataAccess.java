@@ -1,5 +1,6 @@
 package dal;
 
+import be.Author;
 import be.Book;
 import be.Category;
 
@@ -8,14 +9,18 @@ import java.util.List;
 public interface IDataAccess {
 
     void addBook(Book book);
-    String getAllBooks();
+    List<Book> getAllBooks();
     void editBook(int bookID, Book book);
     void deleteBook(int bookID);
 
 
-    String getAllAuthors();
-    Book getBookByAuthor(int authorID);
-    List<Book> getBookByCategory(Category category);
+    List<Author> getAllAuthors();
+    Author getAuthorByID(int id);
+    List<Book> getBooksByCategory(Category category);
     List<Book> getAllBooksByAuthor(int authorID);
+    Book getBookByISBN(int isbn);
+
+    List<Category> getAllCategories();
+    Category getCategoryByID(int id);
 
 }
