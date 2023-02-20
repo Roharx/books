@@ -58,7 +58,6 @@ public class DataAccess implements IDataAccess {
 
     @Override
     public void deleteBook(int isbn) {
-        Book bookToDelete = getBookByISBN(isbn);
         List<Book> allBooks = getAllBooks();
         for (Book b :
                 allBooks) {
