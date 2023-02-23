@@ -9,18 +9,13 @@ import java.util.List;
 public interface IDataAccess {
 
     void addBook(Book book);
+    void editBook(int isbn, Book book);
+    void deleteBook(int isbn);
+
     List<Book> getAllBooks();
-    void editBook(int bookID, Book book);
-    void deleteBook(int bookID);
-
-
     List<Author> getAllAuthors();
-    Author getAuthorByID(int id);
-    List<Book> getBooksByCategory(Category category);
-    List<Book> getAllBooksByAuthor(int authorID);
-    Book getBookByISBN(int isbn);
-
     List<Category> getAllCategories();
-    Category getCategoryByID(int id);
+    List<String> getBookAuthConn();
+    List<String> getBookCatConn();
 
 }

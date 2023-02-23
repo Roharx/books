@@ -4,7 +4,6 @@ import be.Author;
 import be.Book;
 import be.Category;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,8 +16,31 @@ public class DataAccess implements IDataAccess {
     @Override
     public void addBook(Book book) {
         try {
-            BufferedWriter outStream= new BufferedWriter(new FileWriter("data/books.txt", true));
+            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/books.txt", true));
             outStream.write(book.toString());
+            outStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void editBook(int isbn, Book book) {
+        //TODO later
+    }
+
+    @Override
+    public void deleteBook(int isbn) {
+        List<Book> allBooks = getAllBooks();
+        for (Book b : allBooks) {
+            if (b.getIsbn() == isbn)
+                allBooks.remove(b);
+        }
+        try {
+            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/books.txt", false));
+            for (Book b : allBooks) {
+                outStream.write(b.toString());
+            }
             outStream.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -52,31 +74,6 @@ public class DataAccess implements IDataAccess {
     }
 
     @Override
-    public void editBook(int bookID, Book book) {
-        //TODO later
-    }
-
-    @Override
-    public void deleteBook(int isbn) {
-        List<Book> allBooks = getAllBooks();
-        for (Book b :
-                allBooks) {
-            if (b.getIsbn() == isbn)
-                allBooks.remove(b);
-        }
-        try {
-            BufferedWriter outStream= new BufferedWriter(new FileWriter("data/books.txt", false));
-            for (Book b :
-                    allBooks) {
-                outStream.write(b.toString());
-            }
-            outStream.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public List<Author> getAllAuthors() {
         List<Author> allAuthors = new ArrayList<>();
 
@@ -96,59 +93,6 @@ public class DataAccess implements IDataAccess {
         }
 
         return allAuthors;
-    }
-
-    @Override
-    public Author getAuthorByID(int id) {
-
-        List<Author> allAuthors = getAllAuthors();
-        for (Author a :
-                allAuthors) {
-            if (a.getId() == id)
-                return a;
-        }
-
-        return null;
-    }
-
-
-    @Override
-    public List<Book> getBooksByCategory(Category category) {
-        return null;
-    }
-
-    @Override
-    public List<Book> getAllBooksByAuthor(int authorID) {
-        List<Book> booksForAuthor = new ArrayList<>();
-        List<Integer> bookIds = new ArrayList<>();
-
-        try {
-            List<String> authors = Files.readAllLines(Path.of("data/book_authors.txt"));
-            for (String line : authors) {
-                String[] lineContent = line.split(",");
-                if(Integer.parseInt(lineContent[2]) == authorID)
-                    bookIds.add(Integer.parseInt(lineContent[2]));
-            }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        return null;
-    }
-
-    @Override
-    public Book getBookByISBN(int isbn) {
-
-        List<Book> allBooks = getAllBooks();
-        for (Book b :
-                allBooks) {
-            if (b.getIsbn() == isbn)
-                return b;
-        }
-
-        return null;
     }
 
     @Override
@@ -174,15 +118,29 @@ public class DataAccess implements IDataAccess {
     }
 
     @Override
-    public Category getCategoryByID(int id) {
+    public List<String> getBookAuthConn() {
+        return getTableConnections("data/book_authors.txt");
+    }
 
-        List<Category> allCategories = getAllCategories();
-        for (Category c :
-                allCategories) {
-            if (c.getId() == id)
-                return c;
+    @Override
+    public List<String> getBookCatConn() {
+        return getTableConnections("data/book_cat.txt");
+    }
+
+    private List<String> getTableConnections(String file) {
+        List<String> connections = new ArrayList<>();
+
+        try {
+            List<String> lines = Files.readAllLines(Path.of(file));
+            for (String line : lines) {
+                String[] lineContent = line.split(",");
+                connections.add(lineContent[1] + "," + lineContent[2]);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        return null;
+        return connections;
     }
 }
