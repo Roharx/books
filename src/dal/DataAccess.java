@@ -25,15 +25,15 @@ public class DataAccess implements IDataAccess {
     }
 
     @Override
-    public void editBook(int isbn, Book book) {
+    public void editBook(int id, Book book) {
         //TODO later
     }
 
     @Override
-    public void deleteBook(int isbn) {
+    public void deleteBook(int id) {
         List<Book> allBooks = getAllBooks();
         for (Book b : allBooks) {
-            if (b.getIsbn() == isbn)
+            if (b.getId() == id)
                 allBooks.remove(b);
         }
         try {
@@ -57,11 +57,12 @@ public class DataAccess implements IDataAccess {
                 String[] lineContent = line.split(",");
                 allBooks.add(new Book(
                         Integer.parseInt(lineContent[0]),
-                        lineContent[1],
-                        Boolean.parseBoolean(lineContent[2]),
+                        Integer.parseInt(lineContent[1]),
+                        lineContent[2],
                         Boolean.parseBoolean(lineContent[3]),
-                        Integer.parseInt(lineContent[4]),
-                        lineContent[5]
+                        Boolean.parseBoolean(lineContent[4]),
+                        Integer.parseInt(lineContent[5]),
+                        lineContent[6]
                 ));
 
             }

@@ -4,6 +4,15 @@ import java.util.Date;
 
 public class Book {
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
     private int isbn;
     private String title;
     private boolean rented;
@@ -11,7 +20,8 @@ public class Book {
     private int rating;
     private String releaseDate;
 
-    public Book(int isbn, String title, boolean rented, boolean ebook, int rating, String releaseDate){
+    public Book(int id, int isbn, String title, boolean rented, boolean ebook, int rating, String releaseDate) {
+        this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.rented = rented;
@@ -72,7 +82,8 @@ public class Book {
     @Override
     public String toString() {
         return
-                isbn +
+                id +
+                "," + isbn +
                 "," + title +
                 "," + rented +
                 "," + ebook +

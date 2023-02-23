@@ -9,8 +9,8 @@ import java.util.List;
 public interface IDataAccess {
 
     void addBook(Book book);
-    void editBook(int isbn, Book book);
-    void deleteBook(int isbn);
+    void editBook(int id, Book book);
+    void deleteBook(int id);
 
     List<Book> getAllBooks();
     List<Author> getAllAuthors();

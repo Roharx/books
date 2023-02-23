@@ -19,7 +19,7 @@ public interface ILogicManager {
     Author getAuthorByID(int id);
     List<Book> getBooksByCategory(int categoryID);
     List<Book> getAllBooksByAuthor(int authorID);
-    Book getBookByISBN(int isbn);
+    Book getBookById(int isbn);
 
     Category getCategoryByID(int id);
 }

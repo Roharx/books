@@ -76,13 +76,13 @@ public class LogicManager implements ILogicManager, Initializable {
     }
 
     @Override
-    public void editBook(int isbn, Book book) {
-        dataAccess.editBook(isbn, book);
+    public void editBook(int id, Book book) {
+        dataAccess.editBook(id, book);
     }
 
     @Override
-    public void deleteBook(int isbn) {
-        dataAccess.deleteBook(isbn);
+    public void deleteBook(int id) {
+        dataAccess.deleteBook(id);
     }
 
     @Override
@@ -113,15 +113,15 @@ public class LogicManager implements ILogicManager, Initializable {
         for (String line : list) {
             String[] lineContent = line.split(",");
             if (Integer.parseInt(lineContent[1]) == id)
-                results.add(getBookByISBN(Integer.parseInt(lineContent[0])));
+                results.add(getBookById(Integer.parseInt(lineContent[0])));
         }
         return results;
     }
 
     @Override
-    public Book getBookByISBN(int isbn) {
+    public Book getBookById(int id) {
         for (Book b : allBooks) {
-            if (b.getIsbn() == isbn)
+            if (b.getId() == id)
                 return b;
         }
         return null;
