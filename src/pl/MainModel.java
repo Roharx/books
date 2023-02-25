@@ -5,6 +5,7 @@ import be.Book;
 import be.Category;
 import bll.ILogicManager;
 import bll.LogicManager;
+import javafx.collections.ObservableList;
 
 public class MainModel {
 
@@ -13,6 +14,18 @@ public class MainModel {
     public MainModel(){
         this.logicManager = new LogicManager();
     }
+
+    public ObservableList<Book> getAllBooks(){
+        return logicManager.getAllBooks();
+    }
+    public ObservableList<Author> getAllAuthors(){
+        return logicManager.getAllAuthors();
+    }
+    public ObservableList<Category> getAllCategories(){
+        return logicManager.getAllCategories();
+    }
+
+
     public void addBook(Book book){
        logicManager.addBook(book);
     }

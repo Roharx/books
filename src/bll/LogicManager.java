@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class LogicManager implements ILogicManager, Initializable {
+public class LogicManager implements Initializable, ILogicManager {
 
 
-    private IDataAccess dataAccess;
-
+    private IDataAccess dataAccess = new DataAccess();
     private List<Book> allBooks;
     private List<Category> allCategories;
     private List<Author> allAuthors;
@@ -57,16 +56,19 @@ public class LogicManager implements ILogicManager, Initializable {
 
     @Override
     public ObservableList<Book> getAllBooks() {
+        fillAllBooks();
         return FXCollections.observableArrayList(allBooks);
     }
 
     @Override
     public ObservableList<Author> getAllAuthors() {
+        fillAllAuthors();
         return FXCollections.observableArrayList(allAuthors);
     }
 
     @Override
     public ObservableList<Category> getAllCategories() {
+        fillAllCategories();
         return FXCollections.observableArrayList(allCategories);
     }
 

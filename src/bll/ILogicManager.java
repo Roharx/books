@@ -3,14 +3,15 @@ package bll;
 import be.Author;
 import be.Book;
 import be.Category;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
 public interface ILogicManager {
 
-    List<Book> getAllBooks();
-    List<Author> getAllAuthors();
-    List<Category> getAllCategories();
+    ObservableList<Book> getAllBooks();
+    ObservableList<Author> getAllAuthors();
+    ObservableList<Category> getAllCategories();
 
     void addBook(Book book);
     void editBook(int bookID, Book book);

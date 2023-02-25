@@ -9,10 +9,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataAccess implements IDataAccess {
+
+
+    private List<Book> allBooks = new ArrayList<>();
+    private List<Author> allAuthors = new ArrayList<>();
+    private List<Category> allCategories = new ArrayList<>();
+
+
+    public DataAccess() {
+        fillAllBooks();
+        fillAllAuthors();
+        fillAllCategories();
+    }
+
     @Override
     public void addBook(Book book) {
         try {
@@ -99,15 +113,17 @@ public class DataAccess implements IDataAccess {
 
     @Override
     public List<Book> getAllBooks() {
-        List<Book> allBooks = new ArrayList<>();
+        return allBooks;
+    }
 
+    private void fillAllBooks() {
         try {
-            List<String> books = Files.readAllLines(Path.of("data/books.txt"));
+            List<String> books = Files.readAllLines(Paths.get("data/books.txt"));
             for (String line : books) {
                 String[] lineContent = line.split(",");
                 allBooks.add(new Book(
                         Integer.parseInt(lineContent[0]), //id
-                        Integer.parseInt(lineContent[1]), //isbn
+                        lineContent[1], //isbn
                         lineContent[2], //title
                         Boolean.parseBoolean(lineContent[3]), //rented
                         Boolean.parseBoolean(lineContent[4]), //ebook
@@ -120,16 +136,16 @@ public class DataAccess implements IDataAccess {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return allBooks;
     }
 
     @Override
     public List<Author> getAllAuthors() {
-        List<Author> allAuthors = new ArrayList<>();
+        return allAuthors;
+    }
 
+    private void fillAllAuthors() {
         try {
-            List<String> books = Files.readAllLines(Path.of("data/books.txt"));
+            List<String> books = Files.readAllLines(Paths.get("data/authors.txt"));
             for (String line : books) {
                 String[] lineContent = line.split(",");
                 allAuthors.add(new Author(
@@ -142,16 +158,16 @@ public class DataAccess implements IDataAccess {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return allAuthors;
     }
 
     @Override
     public List<Category> getAllCategories() {
-        List<Category> allCategories = new ArrayList<>();
+        return this.allCategories;
+    }
 
+    private void fillAllCategories() {
         try {
-            List<String> categories = Files.readAllLines(Path.of("data/books.txt"));
+            List<String> categories = Files.readAllLines(Paths.get("data/category.txt"));
             for (String line : categories) {
                 String[] lineContent = line.split(",");
                 allCategories.add(new Category(
@@ -164,8 +180,6 @@ public class DataAccess implements IDataAccess {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return allCategories;
     }
 
     @Override
@@ -180,6 +194,7 @@ public class DataAccess implements IDataAccess {
 
     /**
      * Returns the content of the connector tables.
+     *
      * @param file File location.
      * @return Returns a String list separated by ','. The first data is the bookID, the second is the foreignID.
      */
@@ -187,7 +202,7 @@ public class DataAccess implements IDataAccess {
         List<String> connections = new ArrayList<>();
 
         try {
-            List<String> lines = Files.readAllLines(Path.of(file));
+            List<String> lines = Files.readAllLines(Paths.get(file));
             for (String line : lines) {
                 String[] lineContent = line.split(",");
                 connections.add(lineContent[1] + "," + lineContent[2]);
