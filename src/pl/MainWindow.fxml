@@ -31,9 +31,10 @@
       </AnchorPane>
       <AnchorPane fx:id="anpContent" layoutY="58.0" prefHeight="511.0" prefWidth="894.0" styleClass="content-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <TableView fx:id="tbvCategories" focusTraversable="false" prefHeight="510.0" prefWidth="180.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+            <TableView fx:id="tbvCategories" focusTraversable="false" prefHeight="500.0" prefWidth="260.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
               <columns>
-                <TableColumn editable="false" minWidth="180.0" prefWidth="-1.0" resizable="false" text="Categories" />
+                <TableColumn editable="false" minWidth="79.1999740600586" prefWidth="91.99999237060547" resizable="false" text="Categories" />
+                  <TableColumn prefWidth="165.5999984741211" text="Authors" />
               </columns>
                <contextMenu>
                   <ContextMenu>
@@ -44,14 +45,13 @@
                   </ContextMenu>
                </contextMenu>
             </TableView>
-            <TableView fx:id="tbvBooks" focusTraversable="false" layoutX="282.0" prefHeight="510.0" prefWidth="440.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="5.0">
+            <TableView fx:id="tbvBooks" focusTraversable="false" layoutX="282.0" prefHeight="500.0" prefWidth="360.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="5.0">
               <columns>
                 <TableColumn editable="false" prefWidth="75.0" resizable="false" text="ISBN" />
                 <TableColumn editable="false" prefWidth="75.0" resizable="false" text="Title" />
-                  <TableColumn editable="false" prefWidth="75.0" resizable="false" text="Release" />
-                  <TableColumn editable="false" prefWidth="75.0" resizable="false" text="Rented" />
-                  <TableColumn editable="false" prefWidth="78.40005493164062" resizable="false" text="Has Note" />
-                  <TableColumn editable="false" prefWidth="56.0" resizable="false" text="Rating" />
+                  <TableColumn editable="false" prefWidth="87.99993896484375" resizable="false" text="Release" />
+                  <TableColumn editable="false" prefWidth="62.399932861328125" resizable="false" text="Rented" />
+                  <TableColumn editable="false" prefWidth="56.00006103515625" resizable="false" text="Rating" />
               </columns>
                <contextMenu>
                   <ContextMenu>

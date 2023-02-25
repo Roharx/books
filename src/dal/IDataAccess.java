@@ -11,6 +11,10 @@ public interface IDataAccess {
     void addBook(Book book);
     void editBook(int id, Book book);
     void deleteBook(int id);
+    void addCategory(Category category);
+    void deleteCategory(int categoryID);
+    void addAuthor(Author author);
+    void deleteAuthor(int authorID);
 
     List<Book> getAllBooks();
     List<Author> getAllAuthors();

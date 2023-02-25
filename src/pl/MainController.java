@@ -33,7 +33,7 @@ public class MainController implements Initializable {
     tbvCategories;
 
 
-    private MainModel mainModel;
+    private final MainModel mainModel;
 
     public MainController() {
         mainModel = new MainModel();
