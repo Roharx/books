@@ -11,14 +11,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anpMain" prefHeight="560.0" prefWidth="893.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.MainController">
+<AnchorPane fx:id="anpMain" minHeight="400.0" minWidth="895.0" prefHeight="560.0" prefWidth="895.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.MainController">
     <AnchorPane fx:id="anpUserControls" prefHeight="50.0" prefWidth="894.0" styleClass="user-controls" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Button fx:id="btnMenu" focusTraversable="false" layoutX="813.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="Menu" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Add Category" />
-                        <MenuItem mnemonicParsing="false" text="Add New Book" />
+                        <MenuItem mnemonicParsing="false" styleClass="item-option" text="Add New Book" />
+                        <MenuItem mnemonicParsing="false" styleClass="item-option" text="Add New Category" />
+                        <MenuItem mnemonicParsing="false" styleClass="item-option" text="Add New Author" />
                     </items>
                 </ContextMenu>
             </contextMenu>
@@ -26,39 +27,53 @@
         <Button fx:id="btnHistory" focusTraversable="false" layoutX="733.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="History" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
         <TextField fx:id="txfSearch" focusTraversable="false" layoutX="14.0" layoutY="12.0" prefHeight="35.0" prefWidth="240.0" promptText="Search..." AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="12.0" />
         <Button fx:id="btnSearch" focusTraversable="false" layoutX="254.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="50.0" text="🔍" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="0.0" />
+      <Label fx:id="lblSelectedItem" layoutX="305.0" layoutY="17.0" text="Select an item to display" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="17.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
     </AnchorPane>
     <AnchorPane fx:id="anpContent" layoutY="58.0" prefHeight="511.0" prefWidth="894.0" styleClass="content-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <TableView fx:id="tbvCategories" focusTraversable="false" prefHeight="500.0" prefWidth="100.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
             <columns>
-                <TableColumn fx:id="tbcCategories" editable="false" minWidth="79.1999740600586" prefWidth="97.59999990463257" resizable="false" text="Categories" />
+                <TableColumn fx:id="tbcCategories" editable="false" minWidth="95.0" prefWidth="95.0" resizable="false" text="Categories" />
             </columns>
+
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Edit Category" />
-                        <MenuItem mnemonicParsing="false" text="Delete Category" />
+                        <MenuItem mnemonicParsing="false" styleClass="item-option" text="Edit Category" />
+                        <MenuItem mnemonicParsing="false" styleClass="item-option" text="Delete Category" />
                     </items>
                 </ContextMenu>
             </contextMenu>
         </TableView>
       <TableView fx:id="tbvAuthors" focusTraversable="false" layoutX="104.0" layoutY="6.0" prefHeight="500.0" prefWidth="100.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="5.0">
          <columns>
-                <TableColumn fx:id="tbcAuthors" prefWidth="97.5999984741211" text="Authors" />
+                <TableColumn fx:id="tbcAuthors" minWidth="95.0" prefWidth="95.0" text="Authors" />
          </columns>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" styleClass="item-option" text="Edit Author" />
+                  <MenuItem mnemonicParsing="false" styleClass="item-option" text="Delete Author" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </TableView>
         <TableView fx:id="tbvBooks" focusTraversable="false" layoutX="282.0" prefHeight="500.0" prefWidth="485.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="5.0">
             <columns>
-                <TableColumn fx:id="tbcISBN" editable="false" prefWidth="109.60003662109375" resizable="false" text="ISBN" />
-                <TableColumn fx:id="tbcTitle" editable="false" prefWidth="178.39996337890625" resizable="false" text="Title" />
-                <TableColumn fx:id="tbcRelease" editable="false" prefWidth="75.19998168945312" resizable="false" text="Release" />
-                <TableColumn fx:id="tbcRented" editable="false" prefWidth="63.199951171875" resizable="false" text="Rented" />
-                <TableColumn fx:id="tbcRating" editable="false" prefWidth="58.39996337890625" resizable="false" text="Rating" />
+                <TableColumn fx:id="tbcISBN" editable="false" minWidth="110.0" prefWidth="110.0" text="ISBN" />
+                <TableColumn fx:id="tbcTitle" editable="false" minWidth="180.0" prefWidth="180.0" text="Title" />
+                <TableColumn fx:id="tbcRelease" editable="false" minWidth="70.0" prefWidth="70.0" text="Release" />
+                <TableColumn fx:id="tbcRented" editable="false" minWidth="60.0" prefWidth="60.0" text="Rented" />
+                <TableColumn fx:id="tbcRating" editable="false" minWidth="60.5" prefWidth="60.5" text="Rating" />
             </columns>
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Edit Book" />
-                        <MenuItem mnemonicParsing="false" text="Delete Book" />
+                        <MenuItem mnemonicParsing="false" styleClass="item-option" text="Edit Book" />
+                        <MenuItem mnemonicParsing="false" styleClass="item-option" text="Delete Book" />
                     </items>
                 </ContextMenu>
             </contextMenu>
@@ -68,9 +83,9 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Button fx:id="btnCancelNote" focusTraversable="false" layoutX="805.0" layoutY="480.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Cancel" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0" />
-        <Button fx:id="btnSaveNote" focusTraversable="false" layoutX="716.0" layoutY="479.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Save" AnchorPane.bottomAnchor="5.399999999999977" AnchorPane.leftAnchor="716.0" />
-        <TextArea id="note-editor" fx:id="txaNote" focusTraversable="false" layoutX="703.0" layoutY="35.0" prefHeight="440.0" prefWidth="185.0" promptText="To edit a book's note, double click on it." AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="703.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="35.0">
+        <Button fx:id="btnCancelNote" focusTraversable="false" layoutX="805.0" layoutY="480.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#btnCancelNoteClicked" prefHeight="25.0" prefWidth="74.0" text="Cancel" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0" />
+        <Button fx:id="btnSaveNote" focusTraversable="false" layoutX="716.0" layoutY="479.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#btnSaveNoteClicked" prefHeight="25.0" prefWidth="80.0" text="Save" AnchorPane.bottomAnchor="5.399999999999977" AnchorPane.leftAnchor="716.0" />
+        <TextArea id="note-editor" fx:id="txaNote" focusTraversable="false" layoutX="703.0" layoutY="35.0" prefHeight="440.0" prefWidth="185.0" promptText="To edit a book's note, click on it once." AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="705.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="35.0">
             <font>
                 <Font size="14.0" />
             </font>

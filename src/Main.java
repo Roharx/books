@@ -12,7 +12,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("pl/MainWindow.fxml"));
         primaryStage.setTitle("My Book Collections");
-        // primaryStage.setFullScreen(true);
+        primaryStage.setMinWidth(900);
+        primaryStage.setMinHeight(400);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

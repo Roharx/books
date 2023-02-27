@@ -23,6 +23,7 @@ public class LogicManager implements Initializable, ILogicManager {
     private List<Author> allAuthors;
     private List<String> bookAuthorConn;
     private List<String> bookCatConn;
+    private List<String> allBookNotes;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,6 +33,7 @@ public class LogicManager implements Initializable, ILogicManager {
         fillAllAuthors();
         fillBookAuthorConn();
         fillBookCatConn();
+        fillAllBookNotes();
     }
 
     private void fillAllBooks() {
@@ -52,6 +54,10 @@ public class LogicManager implements Initializable, ILogicManager {
 
     private void fillBookCatConn() {
         bookCatConn = dataAccess.getBookCatConn();
+    }
+
+    private void fillAllBookNotes() {
+        allBookNotes = dataAccess.getAllBookNotes();
     }
 
     @Override
@@ -136,6 +142,23 @@ public class LogicManager implements Initializable, ILogicManager {
                 return c;
         }
         return null;
+    }
+
+    @Override
+    public String getNoteForBook(int bookID) {
+        fillAllBookNotes();
+        for (String line : allBookNotes) {
+            String[] lineContent = line.split(",");
+            if (Integer.parseInt(lineContent[0]) == bookID)
+                return line.substring(line.indexOf(',') + 1);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void saveBookNote(int bookID, String note) {
+        dataAccess.saveBookNote(bookID, note);
     }
 
 }

@@ -15,11 +15,13 @@ public interface IDataAccess {
     void deleteCategory(int categoryID);
     void addAuthor(Author author);
     void deleteAuthor(int authorID);
+    void saveBookNote(int bookID, String note);
 
     List<Book> getAllBooks();
     List<Author> getAllAuthors();
     List<Category> getAllCategories();
     List<String> getBookAuthConn();
     List<String> getBookCatConn();
+    List<String> getAllBookNotes();
 
 }

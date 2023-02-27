@@ -56,5 +56,11 @@ public class MainModel {
     public void deleteAuthor(int authorID){
 
     }
+    public String getBookNote(int bookID){
+        return logicManager.getNoteForBook(bookID);
+    }
+    public void saveBookNote(int bookID, String note){
+        logicManager.saveBookNote(bookID,note);
+    }
 
 }

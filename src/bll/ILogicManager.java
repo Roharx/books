@@ -23,4 +23,6 @@ public interface ILogicManager {
     Book getBookById(int isbn);
 
     Category getCategoryByID(int id);
+    String getNoteForBook(int bookID);
+    void saveBookNote(int bookID, String note);
 }
