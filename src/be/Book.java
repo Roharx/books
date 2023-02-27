@@ -9,13 +9,13 @@ public class Book {
     public int getId() {
         return id;
     }
-    private int id;
-    private String isbn;
-    private String title;
-    private boolean rented;
-    private boolean ebook;
-    private int rating;
-    private String releaseDate;
+    private final int id;
+    private final String isbn;
+    private final String title;
+    private final boolean rented;
+    private final boolean ebook;
+    private final int rating;
+    private final String releaseDate;
 
     public Book(int id, String isbn, String title, boolean rented, boolean ebook, int rating, String releaseDate) {
         this.id = id;
