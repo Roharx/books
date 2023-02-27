@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.util.Properties;
 
 public class DbConnector {
-    private static final String file = "resources/mysqllogin.properties";
+    private static final String file = "resources/dblogin.properties";
     private SQLServerDataSource dataSource = null;
 
     public DbConnector(){
