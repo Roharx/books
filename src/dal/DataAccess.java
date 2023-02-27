@@ -222,9 +222,7 @@ public class DataAccess implements IDataAccess {
         allBookNotes.clear();
         try {
             List<String> bookNotes = Files.readAllLines(Paths.get("data/book_notes.txt"));
-            for (String line : bookNotes) {
-                allBookNotes.add(line);
-            }
+            allBookNotes.addAll(bookNotes);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

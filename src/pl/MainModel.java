@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
  */
 public class MainModel {
 
-    private ILogicManager logicManager;
+    private final ILogicManager logicManager;
 
     public MainModel(){
         this.logicManager = new LogicManager();

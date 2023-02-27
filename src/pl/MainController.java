@@ -3,7 +3,6 @@ package pl;
 import be.Author;
 import be.Book;
 import be.Category;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -36,24 +35,29 @@ public class MainController implements Initializable {
             btnMenu;
 
     @FXML
-    public TableView tbvBooks,
-            tbvCategories,
-            tbvAuthors;
+    public TableView<Book> tbvBooks;
     @FXML
-    public TableColumn tbcCategories,
-            tbcAuthors;
+    public TableView<Category> tbvCategories;
     @FXML
-    public TableColumn tbcISBN,
-            tbcTitle,
-            tbcRelease,
-            tbcRented,
-            tbcRating;
+    public TableView<Author> tbvAuthors;
+    @FXML
+    public TableColumn<Category, String> tbcCategories;
+    @FXML
+    public TableColumn<Author, String> tbcAuthors;
+    @FXML
+    public TableColumn<Book, String> tbcISBN;
+    @FXML
+    public TableColumn<Book, String> tbcTitle;
+    @FXML
+    public TableColumn<Book, String> tbcRelease;
+    @FXML
+    public TableColumn<Book, Boolean> tbcRented;
+    @FXML
+    public TableColumn<Book, Integer> tbcRating;
     @FXML
     public Label lblSelectedItem;
 
     private final MainModel mainModel;
-    private final int tooltipX = 650;
-    private final int tooltipY = 115;
 
     public MainController() {
         mainModel = new MainModel();
@@ -66,27 +70,27 @@ public class MainController implements Initializable {
     }
 
     private void setTableCells() {
-        tbcCategories.setCellValueFactory(new PropertyValueFactory<Category, String>("name"));
-        tbcAuthors.setCellValueFactory(new PropertyValueFactory<Author, String>("name"));
+        tbcCategories.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tbcAuthors.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         tbvCategories.setOnMouseClicked(e -> {
-            Category selectedCategory = (Category) tbvCategories.getSelectionModel().getSelectedItem();
+            Category selectedCategory = tbvCategories.getSelectionModel().getSelectedItem();
             lblSelectedItem.setText(selectedCategory.getName());
         });
 
         tbvAuthors.setOnMouseClicked(e -> {
-            Author selectedAuthor = (Author) tbvAuthors.getSelectionModel().getSelectedItem();
+            Author selectedAuthor = tbvAuthors.getSelectionModel().getSelectedItem();
             lblSelectedItem.setText(selectedAuthor.getName());
         });
 
-        tbcISBN.setCellValueFactory(new PropertyValueFactory<Book, String>("isbn"));
-        tbcTitle.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-        tbcRelease.setCellValueFactory(new PropertyValueFactory<Book, String>("releaseDate"));
-        tbcRented.setCellValueFactory(new PropertyValueFactory<Book, Boolean>("rented"));
-        tbcRating.setCellValueFactory(new PropertyValueFactory<Book, Integer>("rating"));
+        tbcISBN.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        tbcTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        tbcRelease.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
+        tbcRented.setCellValueFactory(new PropertyValueFactory<>("rented"));
+        tbcRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
         tbvBooks.setOnMouseClicked(e -> {
-            Book selectedBook = (Book) tbvBooks.getSelectionModel().getSelectedItem();
+            Book selectedBook = tbvBooks.getSelectionModel().getSelectedItem();
             lblSelectedItem.setText(selectedBook.getTitle());
 
             String noteText = mainModel.getBookNote(selectedBook.getId());
@@ -113,13 +117,13 @@ public class MainController implements Initializable {
         fillBookTable();
     }
 
-    public void btnCancelNoteClicked(ActionEvent actionEvent) {
-        Book selectedBook = (Book) tbvBooks.getSelectionModel().getSelectedItem();
+    public void btnCancelNoteClicked() {
+        Book selectedBook = tbvBooks.getSelectionModel().getSelectedItem();
         txaNote.setText(mainModel.getBookNote(selectedBook.getId()));
     }
 
-    public void btnSaveNoteClicked(ActionEvent actionEvent) {
-        Book selectedBook = (Book) tbvBooks.getSelectionModel().getSelectedItem();
+    public void btnSaveNoteClicked() {
+        Book selectedBook = tbvBooks.getSelectionModel().getSelectedItem();
         mainModel.saveBookNote(selectedBook.getId(), txaNote.getText());
         JOptionPane.showMessageDialog(null, "Note saved to " + selectedBook.getTitle());
     }
