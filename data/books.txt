@@ -1,0 +1,4 @@
+1,978-3-16-148410-0,This is a book title,false,false,5,01.01.1990
+2,978-3-16-148410-1,This is the second title,true,false,4,06.05.2004
+3,978-3-16-148410-2,This is the third title,false,true,3,24.11.2005
+4,978-3-16-148410-3,This is the fourth title,true,true,4,12.01.2023

@@ -1,0 +1,70 @@
+.user-controls{
+    -fx-background-color: #d7cec7;
+}
+.user-controls .button{
+    -fx-background-color: transparent;
+    -fx-text-fill: #565656;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+.user-controls .button:hover{
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+    -fx-translate-z: 1.1;
+    -fx-cursor: hand;
+    -fx-background-color: rgba(0,0,0,0.1);
+}
+.user-controls .label{
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-background-radius: 5px;
+    -fx-padding: 0 5 0 5;
+    -fx-text-fill: white;
+}
+.content-container{
+    -fx-background-color: #c09f80;
+}
+.content-container .label{
+    -fx-text-fill: #76323f;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+.content-container .table-view{
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-border-color: rgba(0,0,0,0.5);
+}
+.content-container .table-column{
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-border-color: rgba(0,0,0,0.6);
+}
+.content-container .table-column:hover{
+    -fx-cursor: hand;
+}
+#note-editor{
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #545454;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-wrap-text: true;
+}
+.content-container .button{
+    -fx-text-fill: #76323f;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #d7cec7;
+}
+.content-container .button:hover{
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-cursor: hand;
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+    -fx-translate-z: 1.1;
+}
+.item-option{
+    -fx-background-color: #8f7660;
+    -fx-font-weight: bold;
+}
+.item-option:hover{
+    -fx-cursor: hand;
+}

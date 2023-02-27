@@ -13,17 +13,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+/*
+@author Bálint Farkas
+ */
 
-public class LogicManager implements ILogicManager, Initializable {
+public class LogicManager implements Initializable, ILogicManager {
 
 
-    private IDataAccess dataAccess;
-
+    private IDataAccess dataAccess = new DataAccess();
     private List<Book> allBooks;
     private List<Category> allCategories;
     private List<Author> allAuthors;
     private List<String> bookAuthorConn;
     private List<String> bookCatConn;
+    private List<String> allBookNotes;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -33,6 +36,7 @@ public class LogicManager implements ILogicManager, Initializable {
         fillAllAuthors();
         fillBookAuthorConn();
         fillBookCatConn();
+        fillAllBookNotes();
     }
 
     private void fillAllBooks() {
@@ -55,18 +59,25 @@ public class LogicManager implements ILogicManager, Initializable {
         bookCatConn = dataAccess.getBookCatConn();
     }
 
+    private void fillAllBookNotes() {
+        allBookNotes = dataAccess.getAllBookNotes();
+    }
+
     @Override
     public ObservableList<Book> getAllBooks() {
+        fillAllBooks();
         return FXCollections.observableArrayList(allBooks);
     }
 
     @Override
     public ObservableList<Author> getAllAuthors() {
+        fillAllAuthors();
         return FXCollections.observableArrayList(allAuthors);
     }
 
     @Override
     public ObservableList<Category> getAllCategories() {
+        fillAllCategories();
         return FXCollections.observableArrayList(allCategories);
     }
 
@@ -76,13 +87,13 @@ public class LogicManager implements ILogicManager, Initializable {
     }
 
     @Override
-    public void editBook(int isbn, Book book) {
-        dataAccess.editBook(isbn, book);
+    public void editBook(int id, Book book) {
+        dataAccess.editBook(id, book);
     }
 
     @Override
-    public void deleteBook(int isbn) {
-        dataAccess.deleteBook(isbn);
+    public void deleteBook(int id) {
+        dataAccess.deleteBook(id);
     }
 
     @Override
@@ -113,15 +124,15 @@ public class LogicManager implements ILogicManager, Initializable {
         for (String line : list) {
             String[] lineContent = line.split(",");
             if (Integer.parseInt(lineContent[1]) == id)
-                results.add(getBookByISBN(Integer.parseInt(lineContent[0])));
+                results.add(getBookById(Integer.parseInt(lineContent[0])));
         }
         return results;
     }
 
     @Override
-    public Book getBookByISBN(int isbn) {
+    public Book getBookById(int id) {
         for (Book b : allBooks) {
-            if (b.getIsbn() == isbn)
+            if (b.getId() == id)
                 return b;
         }
         return null;
@@ -134,6 +145,23 @@ public class LogicManager implements ILogicManager, Initializable {
                 return c;
         }
         return null;
+    }
+
+    @Override
+    public String getNoteForBook(int bookID) {
+        fillAllBookNotes();
+        for (String line : allBookNotes) {
+            String[] lineContent = line.split(",");
+            if (Integer.parseInt(lineContent[0]) == bookID)
+                return line.substring(line.indexOf(',') + 1);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void saveBookNote(int bookID, String note) {
+        dataAccess.saveBookNote(bookID, note);
     }
 
 }

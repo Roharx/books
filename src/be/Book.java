@@ -1,17 +1,24 @@
 package be;
 
-import java.util.Date;
+/*
+@author Bálint Farkas
+ */
 
 public class Book {
 
-    private int isbn;
-    private String title;
-    private boolean rented;
-    private boolean ebook;
-    private int rating;
-    private String releaseDate;
+    public int getId() {
+        return id;
+    }
+    private final int id;
+    private final String isbn;
+    private final String title;
+    private final boolean rented;
+    private final boolean ebook;
+    private final int rating;
+    private final String releaseDate;
 
-    public Book(int isbn, String title, boolean rented, boolean ebook, int rating, String releaseDate){
+    public Book(int id, String isbn, String title, boolean rented, boolean ebook, int rating, String releaseDate) {
+        this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.rented = rented;
@@ -20,59 +27,30 @@ public class Book {
         this.releaseDate = releaseDate;
     }
 
-    public int getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
-
-    public void setIsbn(int isbn) {
-        this.isbn = isbn;
-    }
-
     public String getTitle() {
         return title;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public boolean isRented() {
         return rented;
     }
-
-    public void setRented(boolean rented) {
-        this.rented = rented;
-    }
-
     public boolean isEbook() {
         return ebook;
     }
-
-    public void setEbook(boolean ebook) {
-        this.ebook = ebook;
-    }
-
     public int getRating() {
         return rating;
     }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
     public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-
     @Override
     public String toString() {
         return
-                isbn +
+                id +
+                "," + isbn +
                 "," + title +
                 "," + rented +
                 "," + ebook +
