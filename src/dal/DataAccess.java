@@ -3,12 +3,15 @@ package dal;
 import be.Author;
 import be.Book;
 import be.Category;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 /*
@@ -17,6 +20,7 @@ import java.util.List;
 
 public class DataAccess implements IDataAccess {
 
+    DbConnector dbConnector = new DbConnector();
 
     private List<Book> allBooks = new ArrayList<>();
     private List<Author> allAuthors = new ArrayList<>();
@@ -34,10 +38,20 @@ public class DataAccess implements IDataAccess {
     @Override
     public void addBook(Book book) {
         try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/books.txt", true));
-            outStream.write(book.toString());
-            outStream.close();
-        } catch (IOException e) {
+            String psql = "INSERT INTO books (isbn, title, rented, ebook, rating, releaseDate) VALUES (?,?,?,?,?,?)";
+
+            PreparedStatement pst = dbConnector.createConnection().prepareStatement(psql);
+            pst.setString(1, book.getIsbn());
+            pst.setString(2, book.getTitle());
+            pst.setBoolean(3, book.isRented());
+            pst.setBoolean(4, book.isEbook());
+            pst.setInt(5, book.getRating());
+            pst.setString(6, book.getReleaseDate());
+            pst.execute();
+
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -49,15 +63,15 @@ public class DataAccess implements IDataAccess {
 
     @Override
     public void deleteBook(int bookID) {
-        List<Book> allBooks = getAllBooks();
-        allBooks.removeIf(b -> b.getId() == bookID);
         try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/books.txt", false));
-            for (Book b : allBooks) {
-                outStream.write(b.toString());
-            }
-            outStream.close();
-        } catch (IOException e) {
+            Connection con = dbConnector.createConnection();
+            PreparedStatement pstCatMovie = con.prepareStatement("DELETE FROM books WHERE id = ?;");
+            pstCatMovie.setInt(1, bookID);
+            pstCatMovie.executeUpdate();
+
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -65,25 +79,30 @@ public class DataAccess implements IDataAccess {
     @Override
     public void addCategory(Category category) {
         try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/category.txt", true));
-            outStream.write(category.toString());
-            outStream.close();
-        } catch (IOException e) {
+            String psql = "INSERT INTO category (name) VALUES (?)";
+
+            PreparedStatement pst = dbConnector.createConnection().prepareStatement(psql);
+            pst.setString(1, category.getName());
+            pst.execute();
+
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void deleteCategory(int categoryID) {
-        List<Category> allCategories = getAllCategories();
-        allCategories.removeIf(b -> b.getId() == categoryID);
         try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/category.txt", false));
-            for (Category b : allCategories) {
-                outStream.write(b.toString());
-            }
-            outStream.close();
-        } catch (IOException e) {
+            Connection con = dbConnector.createConnection();
+            PreparedStatement pstCatMovie = con.prepareStatement("DELETE FROM category WHERE id = ?;");
+            pstCatMovie.setInt(1, categoryID);
+            pstCatMovie.executeUpdate();
+
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -91,26 +110,30 @@ public class DataAccess implements IDataAccess {
     @Override
     public void addAuthor(Author author) {
         try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/author.txt", true));
-            outStream.write(author.toString());
-            outStream.close();
-        } catch (IOException e) {
+            String psql = "INSERT INTO authors (name) VALUES (?)";
+
+            PreparedStatement pst = dbConnector.createConnection().prepareStatement(psql);
+            pst.setString(1, author.getName());
+            pst.execute();
+
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void deleteAuthor(int authorID) {
-        List<Author> allAuthors = getAllAuthors();
-        allAuthors.removeIf(a -> a.getId() == authorID);
         try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("data/author.txt", false));
-            for (Author a : allAuthors) {
-                outStream.write(a.toString());
-            }
-            outStream.close();
-        } catch (IOException e) {
+            Connection con = dbConnector.createConnection();
+            PreparedStatement pstCatMovie = con.prepareStatement("DELETE FROM authors WHERE id = ?;");
+            pstCatMovie.setInt(1, authorID);
+            pstCatMovie.executeUpdate();
+
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -140,8 +163,6 @@ public class DataAccess implements IDataAccess {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
@@ -151,23 +172,31 @@ public class DataAccess implements IDataAccess {
 
     private void fillAllBooks() {
         allBooks.clear();
-        try {
-            List<String> books = Files.readAllLines(Paths.get("data/books.txt"));
-            for (String line : books) {
-                String[] lineContent = line.split(",");
-                allBooks.add(new Book(
-                        Integer.parseInt(lineContent[0]), //id
-                        lineContent[1], //isbn
-                        lineContent[2], //title
-                        Boolean.parseBoolean(lineContent[3]), //rented
-                        Boolean.parseBoolean(lineContent[4]), //ebook
-                        Integer.parseInt(lineContent[5]), //rating
-                        lineContent[6] //release date
-                ));
+        List<Book> allBooks = new ArrayList<>();
 
+        try (Connection con = dbConnector.createConnection()) {
+            String sql = "SELECT * FROM books;";
+            Statement statement = con.createStatement();
+
+            if (statement.execute(sql)) {
+                ResultSet resultSet = statement.getResultSet();
+
+                while (resultSet.next()) {
+                    Book book = new Book(
+                            resultSet.getInt("id"),
+                            resultSet.getString("isbn"),
+                            resultSet.getString("title"),
+                            resultSet.getBoolean("rented"),
+                            resultSet.getBoolean("ebook"),
+                            resultSet.getInt("rating"),
+                            resultSet.getString("releaseDate")
+                    );
+                    allBooks.add(book);
+                }
             }
-
-        } catch (IOException e) {
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -179,18 +208,26 @@ public class DataAccess implements IDataAccess {
 
     private void fillAllAuthors() {
         allAuthors.clear();
-        try {
-            List<String> books = Files.readAllLines(Paths.get("data/authors.txt"));
-            for (String line : books) {
-                String[] lineContent = line.split(",");
-                allAuthors.add(new Author(
-                        Integer.parseInt(lineContent[0]), //id
-                        lineContent[1] //name
-                ));
+        List<Author> allAuthors = new ArrayList<>();
 
+        try (Connection con = dbConnector.createConnection()) {
+            String sql = "SELECT * FROM authors;";
+            Statement statement = con.createStatement();
+
+            if (statement.execute(sql)) {
+                ResultSet resultSet = statement.getResultSet();
+
+                while (resultSet.next()) {
+                    Author author = new Author(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+                    );
+                    allAuthors.add(author);
+                }
             }
-
-        } catch (IOException e) {
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -202,18 +239,26 @@ public class DataAccess implements IDataAccess {
 
     private void fillAllCategories() {
         allCategories.clear();
-        try {
-            List<String> categories = Files.readAllLines(Paths.get("data/category.txt"));
-            for (String line : categories) {
-                String[] lineContent = line.split(",");
-                allCategories.add(new Category(
-                        Integer.parseInt(lineContent[0]), //id
-                        lineContent[1] //name
-                ));
+        List<Category> allCategories = new ArrayList<>();
 
+        try (Connection con = dbConnector.createConnection()) {
+            String sql = "SELECT * FROM category;";
+            Statement statement = con.createStatement();
+
+            if (statement.execute(sql)) {
+                ResultSet resultSet = statement.getResultSet();
+
+                while (resultSet.next()) {
+                    Category category = new Category(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+                    );
+                    allCategories.add(category);
+                }
             }
-
-        } catch (IOException e) {
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -266,5 +311,4 @@ public class DataAccess implements IDataAccess {
 
         return connections;
     }
-
 }
