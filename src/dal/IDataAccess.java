@@ -5,6 +5,9 @@ import be.Book;
 import be.Category;
 
 import java.util.List;
+/*
+@author Bálint Farkas
+ */
 
 public interface IDataAccess {
 

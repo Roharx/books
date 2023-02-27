@@ -6,6 +6,9 @@ import be.Category;
 import javafx.collections.ObservableList;
 
 import java.util.List;
+/*
+@author Bálint Farkas
+ */
 
 public interface ILogicManager {
 

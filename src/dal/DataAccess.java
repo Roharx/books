@@ -11,7 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SimpleTimeZone;
+/*
+@author Bálint Farkas
+ */
 
 public class DataAccess implements IDataAccess {
 

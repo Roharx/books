@@ -1,6 +1,8 @@
 package be;
 
-import java.util.Date;
+/*
+@author Bálint Farkas
+ */
 
 public class Book {
 

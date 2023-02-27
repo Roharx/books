@@ -1,5 +1,7 @@
 package be;
-
+/*
+@author Bálint Farkas
+ */
 public class Category {
     private int id;
     private String name;

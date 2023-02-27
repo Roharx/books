@@ -6,7 +6,9 @@ import be.Category;
 import bll.ILogicManager;
 import bll.LogicManager;
 import javafx.collections.ObservableList;
-
+/*
+@author Bálint Farkas
+ */
 public class MainModel {
 
     private ILogicManager logicManager;
